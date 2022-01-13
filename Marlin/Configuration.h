@@ -604,10 +604,10 @@
 //    #define DEFAULT_Kp  22.20
 //    #define DEFAULT_Ki   1.08
 //    #define DEFAULT_Kd 114.00
-// Values for my Tronxy X5SA-Pro, setermined by Autotune
-    #define DEFAULT_Kp  15.74
-    #define DEFAULT_Ki   0.91
-    #define DEFAULT_Kd  68.30
+// Values for my Tronxy X5SA-Pro, determined by Autotune
+    #define DEFAULT_Kp  16.19
+    #define DEFAULT_Ki   1.02
+    #define DEFAULT_Kd  64.11
   #endif
 #endif // PIDTEMP
 
@@ -728,7 +728,7 @@
  * Note: For Bowden Extruders make this large enough to allow load/unload.
  */
 #define PREVENT_LENGTHY_EXTRUDE
-#define EXTRUDE_MAXLENGTH 940
+#define EXTRUDE_MAXLENGTH 1000
 
 //===========================================================================
 //======================== Thermal Runaway Protection =======================
@@ -1194,11 +1194,14 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET {-30, -5, -0.5 }
+
+// For my Tronxy X5SA-Pro with BL Touch
+//#define NOZZLE_TO_PROBE_OFFSET {-43, -6, -0.5 }
+#define NOZZLE_TO_PROBE_OFFSET {-43, -6, -4.3 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 10
+#define PROBING_MARGIN 15
 
 // X and Y axis travel speed (mm/min) between probes
 #define XY_PROBE_FEEDRATE (133*60)
@@ -1627,7 +1630,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 5
+  #define GRID_MAX_POINTS_X 3
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -1907,7 +1910,7 @@
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   // Specify a park position as { X, Y, Z_raise }
-  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
+  #define NOZZLE_PARK_POINT { (X_MIN_POS + 20), (Y_MIN_POS + 20), 20 }
   //#define NOZZLE_PARK_X_ONLY          // X move only is required to park
   //#define NOZZLE_PARK_Y_ONLY          // Y move only is required to park
   #define NOZZLE_PARK_Z_RAISE_MIN   2   // (mm) Always raise Z by at least this distance
