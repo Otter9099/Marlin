@@ -938,7 +938,13 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 764 }
+
+// Original values from Tronxy
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 764 }
+
+// Re-calibrate extruder because of bad under extrusion
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 897 }
+
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -1445,7 +1451,7 @@
 #endif
 
 #if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
-  //#define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
+  #define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
 #endif
 
 /**
