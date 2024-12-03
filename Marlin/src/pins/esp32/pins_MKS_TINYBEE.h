@@ -43,7 +43,7 @@
 //
 // Servos
 //
-#define SERVO0_PIN                             2  // 3D TOUCH, Pin is level shifted to 5v, and cannot be used as an input pin
+#define SERVO0_PIN                             2  // 3D TOUCH, Pin is level-shifted to 5V, and cannot be used as an INPUT pin!
 
 //
 // Limit Switches
@@ -130,7 +130,7 @@
  *                 ------                                 ------
  *                  EXP1                                   EXP2
  *
- * * = Note: Pin is level shifted to 5v, cannot be used as an input pin
+ * * = Note: Pin is level-shifted to 5V. Cannot be used as an INPUT pin!
  *           Displays like a CR10_STOCKDISPLAY that require inputs on EXP1 cannot be plugged straight into this board.
  */
 
