@@ -227,11 +227,6 @@
  *  Z   Home to the Z endstop
  */
 void GcodeSuite::G28() {
-
-  #if ENABLED(FT_MOTION) && ANY(BIQU_MICROPROBE_V1, BIQU_MICROPROBE_V2)
-    FTMotionDisableUntilExit FT_Disabler; // Disable Fixed-Time Motion for homing
-  #endif
-
   DEBUG_SECTION(log_G28, "G28", DEBUGGING(LEVELING));
   if (DEBUGGING(LEVELING)) log_machine_info();
 
@@ -296,6 +291,10 @@ void GcodeSuite::G28() {
 
     #if ENABLED(IMPROVE_HOMING_RELIABILITY)
       motion_state_t saved_motion_state = begin_slow_homing();
+    #endif
+
+    #if ENABLED(FT_MOTION) && ANY(BIQU_MICROPROBE_V1, BIQU_MICROPROBE_V2)
+      FTMotionDisableUntilExit FT_Disabler; // Disable Fixed-Time Motion for homing
     #endif
 
     // Always home with tool 0 active

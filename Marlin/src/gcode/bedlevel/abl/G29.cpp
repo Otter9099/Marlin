@@ -234,10 +234,6 @@ public:
  */
 G29_TYPE GcodeSuite::G29() {
 
-  #if ENABLED(FT_MOTION) && ANY(BIQU_MICROPROBE_V1, BIQU_MICROPROBE_V2)
-    FTMotionDisableUntilExit FT_Disabler; // Disable Fixed-Time Motion for probing
-  #endif
-
   DEBUG_SECTION(log_G29, "G29", DEBUGGING(LEVELING));
 
   // Leveling state is persistent when done manually with multiple G29 commands
@@ -287,6 +283,10 @@ G29_TYPE GcodeSuite::G29() {
 
   // Set and report "probing" state to host
   TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_PROBE, false));
+
+  #if DISABLED(PROBE_MANUALLY) && ENABLED(FT_MOTION) && ANY(BIQU_MICROPROBE_V1, BIQU_MICROPROBE_V2)
+    FTMotionDisableUntilExit FT_Disabler; // Disable Fixed-Time Motion for probing
+  #endif
 
   /**
    * On the initial G29 fetch command parameters.
