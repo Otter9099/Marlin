@@ -225,6 +225,6 @@ typedef struct FTMotionDisableUntilExit {
   }
   ~FTMotionDisableUntilExit() {
     ftMotion.cfg.active = isactive;
-    ftMotion.init();
+    if (isactive) ftMotion.init();
   }
 } FTMotionDisableUntilExit_t;
