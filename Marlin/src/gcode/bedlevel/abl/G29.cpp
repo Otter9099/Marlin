@@ -235,18 +235,7 @@ public:
 G29_TYPE GcodeSuite::G29() {
 
   #if ENABLED(FT_MOTION) && ANY(BIQU_MICROPROBE_V1, BIQU_MICROPROBE_V2)
-      // Disable Fixed-Time Motion for probing
-    struct OnExit {
-      bool isactive;
-      OnExit() {
-        isactive = ftMotion.cfg.active;
-        ftMotion.cfg.active = false;
-      }
-      ~OnExit() {
-        ftMotion.cfg.active = isactive;
-        ftMotion.init();
-      }
-    } on_exit;
+    FTMotionDisableUntilExit FT_Disabler; // Disable Fixed-Time Motion for probing
   #endif
 
   DEBUG_SECTION(log_G29, "G29", DEBUGGING(LEVELING));
