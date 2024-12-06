@@ -65,6 +65,7 @@ volatile bool send_gcode_count      = false;
 volatile uint32_t t[5]  = { 0, 0, 0, 0, 0 }; // Timestamps for time sync
 volatile bool CAN_request_time_sync = false; // Request a timestamp
 volatile uint32_t time_offset           = 0; // Time offset in micro seconds in relation to host time
+float drift                             = 0; // Time sync calculated drift between host and tool head
 
 extern "C" void TIM16_IRQHandler(void);
 extern "C" void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs);
@@ -516,10 +517,14 @@ void FDCAN_idle() { // Called from MarlinCore.cpp
     SERIAL_ECHOLNPGM("t1: ", t[1], " us");
     SERIAL_ECHOLNPGM("t2: ", t[2], " us");
     SERIAL_ECHOLNPGM("t3: ", t[3], " us");
+    if (drift)
+      SERIAL_ECHOLNPGM("Predicted time adjustment: ", drift * float(t[0] - t[4]) / 1000000.0 , " us");  
+    
     SERIAL_ECHOPGM("Local time adjustment: ", local_time_adjustment, " us");
     if (t[4]) {
       SERIAL_ECHOLNPGM(" after ",  ftostr42_52(float(t[0] - t[4]) / 1000000.0), " seconds");
-      SERIAL_ECHOLNPGM("Drift: ", local_time_adjustment / (float(t[0] - t[4]) / 1000000.0), " us/s");
+      drift = local_time_adjustment / (float(t[0] - t[4]) / 1000000.0); // Calculate drift again
+      SERIAL_ECHOLNPGM("Drift: ", drift, " us/s");
     }
     else
       SERIAL_EOL();
