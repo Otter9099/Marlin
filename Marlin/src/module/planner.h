@@ -43,6 +43,10 @@
   #define JD_USE_LOOKUP_TABLE
 #endif
 
+#if ENABLED(LIN_ADVANCE) && DISABLED(LA_ZERO_SLOWDOWN)
+  #define HAS_LA_WITH_SLOWDOWN 1
+#endif
+
 #include "motion.h"
 #include "../gcode/queue.h"
 
@@ -101,6 +105,11 @@
 #if IS_KINEMATIC && HAS_JUNCTION_DEVIATION
   #define HAS_DIST_MM_ARG 1
 #endif
+
+// Planner steps use 32 bits
+// Use int_fast16_t if steps are always < 65536.
+typedef int32_t step_t;
+typedef uint32_t ustep_t;
 
 /**
  * Planner block flags as boolean bit fields
@@ -254,10 +263,12 @@ typedef struct PlannerBlock {
 
   // Advance extrusion
   #if ENABLED(LIN_ADVANCE)
-    uint32_t la_advance_rate;               // The rate at which steps are added whilst accelerating
     uint8_t  la_scaling;                    // Scale ISR frequency down and step frequency up by 2 ^ la_scaling
-    uint16_t max_adv_steps,                 // Max advance steps to get cruising speed pressure
-             final_adv_steps;               // Advance steps for exit speed pressure
+    uint32_t la_advance_rate;               // The rate at which steps are added whilst accelerating
+    #if HAS_LA_WITH_SLOWDOWN
+      uint16_t max_adv_steps,               // Max advance steps to get cruising speed pressure
+              final_adv_steps;              // Advance steps for exit speed pressure
+    #endif
   #endif
 
   uint32_t nominal_rate,                    // The nominal step rate for this block in step_events/sec
