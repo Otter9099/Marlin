@@ -97,7 +97,6 @@
   //#define TMC_BAUD_RATE 250000
 
   #define E0_SERIAL_TX_PIN                  PA15
-  #define E0_SERIAL_RX_PIN      E0_SERIAL_TX_PIN
 
   // Reduce baud rate to improve software serial reliability
   #ifndef TMC_BAUD_RATE
@@ -106,9 +105,9 @@
 
   // Default TMC slave addresses
   #ifndef E0_SLAVE_ADDRESS
-    #define E0_SLAVE_ADDRESS               0b00
+    #define E0_SLAVE_ADDRESS                0
   #endif
-  static_assert(E0_SLAVE_ADDRESS == 0b00, "E0_SLAVE_ADDRESS must be 0b00 for BOARD_BTT_EBB42_V1_1.");
+  static_assert(E0_SLAVE_ADDRESS == 0, "E0_SLAVE_ADDRESS must be 0 for BOARD_BTT_EBB42_V1_1.");
 #endif
 
 //
