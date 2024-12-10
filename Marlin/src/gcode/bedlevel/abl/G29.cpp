@@ -393,6 +393,12 @@ G29_TYPE GcodeSuite::G29() {
     #if ABL_USES_GRID
 
       xy_probe_feedrate_mm_s = MMM_TO_MMS(parser.linearval('S', XY_PROBE_FEEDRATE));
+      #ifdef XY_PROBE_FEEDRATE_MIN
+        if (xy_probe_feedrate_mm_s <= MMM_TO_MMS(XY_PROBE_FEEDRATE_MIN)) {
+          SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Probe XY feedrate set too low. using default XY_PROBE_FEEDRATE"));
+          xy_probe_feedrate_mm_s = MMM_TO_MMS(XY_PROBE_FEEDRATE);
+        }
+      #endif
 
       const float x_min = probe.min_x(), x_max = probe.max_x(),
                   y_min = probe.min_y(), y_max = probe.max_y();
