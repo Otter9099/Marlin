@@ -73,7 +73,7 @@
 //
 // Z Probe (when not Z_MIN_PIN)
 //
-#define Z_MIN_PROBE_PIN                     PC3  // Z3_PIN
+#define Z_MIN_PROBE_PIN                     PC3
 
 //
 // Steppers
@@ -335,11 +335,6 @@
 
 #endif // HAS_WIRED_LCD
 
-//
-// Filament runout
-//
-
-#define FIL_RUNOUT_PIN                      PA8
 
 // Alter timing for graphical display
 #if IS_U8GLIB_ST7920

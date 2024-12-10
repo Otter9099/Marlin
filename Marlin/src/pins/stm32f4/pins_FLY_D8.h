@@ -24,10 +24,6 @@
 #define ALLOW_STM32DUINO
 #include "env_validate.h"
 
-#if HOTENDS > 6 || E_STEPPERS > 6
-  #error "FLYF407ZG supports up to 6 hotends / E steppers."
-#endif
-
 #define BOARD_INFO_NAME      "FLY D8"
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
@@ -68,15 +64,20 @@
 #define X_MAX_PIN                           PD8
 #define Y_MIN_PIN                           PD11
 #define Y_MAX_PIN                           PD10
-// #define Z_MIN_PIN                           PA5
-// #define Z_MAX_PIN                           PA4
-#define Z_MIN_PIN                           PA3
-#define Z_MAX_PIN                           PD15
+#define Z_MIN_PIN                           PA5
+#define Z_MAX_PIN                           PA4
+
+//
+// NEOPIXEL
+//
+
+#define NEOPIXEL_PIN                        PA3
+#define NEOPIXEL2_PIN                       PD15
 
 //
 // Z Probe (when not Z_MIN_PIN)
 //
-#define Z_MIN_PROBE_PIN                     PC0  // Z3_PIN
+#define Z_MIN_PROBE_PIN                     PC0 
 
 //
 // Steppers
@@ -323,3 +324,9 @@
 
 #endif // HAS_WIRED_LCD
 
+// Alter timing for graphical display
+#if IS_U8GLIB_ST7920
+  #define BOARD_ST7920_DELAY_1                96
+  #define BOARD_ST7920_DELAY_2                48
+  #define BOARD_ST7920_DELAY_3               715
+#endif

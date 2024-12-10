@@ -845,7 +845,7 @@
   #include "stm32f4/pins_XTLW_CLIMBER_8TH.h"        // STM32F4                              env:XTLW_CLIMBER_8TH
 #elif MB(FLY_RRF_E3_V1)
   #include "stm32f4/pins_FLY_RRF_E3_V1.h"           // STM32F4                              env:FLY_RRF_E3_V1
-#elif MB(SUPER8)
+#elif MB(FLY_SUPER8)
   #include "stm32f4/pins_FLY_SUPER8.h"              // STM32F4                              env:SUPER8
 #elif MB(FLY_D8)
   #include "stm32f4/pins_FLY_D8.h"                  // STM32F4                              env:FLY_D8
