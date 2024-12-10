@@ -394,10 +394,10 @@ G29_TYPE GcodeSuite::G29() {
 
       xy_probe_feedrate_mm_s = MMM_TO_MMS(parser.linearval('S', XY_PROBE_FEEDRATE));
 
-      const feedRate_t min_feedrate_mm_s = MMM_TO_MMS(_MAX(1.0f, _MIN(XY_PROBE_FEEDRATE_MIN, XY_PROBE_FEEDRATE)));
-      if (xy_probe_feedrate_mm_s < min_feedrate_mm_s) {
-        xy_probe_feedrate_mm_s = min_feedrate_mm_s;
-        SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Feedrate (S) too low. (Using ", min_feedrate_mm_s, ")"));
+      const feedRate_t min_probe_feedrate_mm_s = MMM_TO_MMS(_MAX(1.0f, _MIN(XY_PROBE_FEEDRATE_MIN, XY_PROBE_FEEDRATE)));
+      if (xy_probe_feedrate_mm_s < min_probe_feedrate_mm_s) {
+        xy_probe_feedrate_mm_s = min_probe_feedrate_mm_s;
+        SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Feedrate (S) too low. (Using ", min_probe_feedrate_mm_s, ")"));
       }
 
       const float x_min = probe.min_x(), x_max = probe.max_x(),
