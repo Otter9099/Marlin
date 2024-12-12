@@ -392,7 +392,7 @@ G29_TYPE GcodeSuite::G29() {
 
     #if ABL_USES_GRID
 
-      const feedRate_t min_probe_feedrate_mm_s = MMM_TO_MMS(_MAX(5.0f, XY_PROBE_FEEDRATE_MIN, XY_PROBE_FEEDRATE));
+      constexpr feedRate_t min_probe_feedrate_mm_s = XY_PROBE_FEEDRATE_MIN;
       xy_probe_feedrate_mm_s = MMM_TO_MMS(parser.linearval('S', XY_PROBE_FEEDRATE));
       if (xy_probe_feedrate_mm_s < min_probe_feedrate_mm_s) {
         xy_probe_feedrate_mm_s = min_probe_feedrate_mm_s;
