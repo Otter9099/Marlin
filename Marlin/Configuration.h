@@ -222,19 +222,11 @@
 // :[0, 1, 2, 3, 4, 5, 6, 7, 8]
 #define EXTRUDERS 1
 
-/// Beginning of a Differential Extruder block  1/5  ////
-// This is defined when a differential extruder is present
-#define DIFFERENTIAL_EXTRUDER
-//
-// Differential Extruder currently works only for single-extruder RepRap 32-bit platforms.
-// Otherwise, disable Differential Extruder
-#if ENABLED(DIFFERENTIAL_EXTRUDER)
-    #if !((EXTRUDERS == 1) && (MOTHERBOARD == BOARD_CREALITY_V4))
-      #undef DIFFERENTIAL_EXTRUDER
-    #endif
-#endif
-//// End of a Differential Extruder block  1/5  ////
-
+/**
+ * Differential Extruder
+ * Currently works only for single-extruder RepRap 32-bit.
+ */
+//#define DIFFERENTIAL_EXTRUDER
 
 // Generally expected filament diameter (1.75, 2.85, 3.0, ...). Used for Volumetric, Filament Width Sensor, etc.
 #define DEFAULT_NOMINAL_FILAMENT_DIA 1.75
@@ -3669,17 +3661,6 @@
 #if ANY(BLINKM, RGB_LED, RGBW_LED, PCA9632, PCA9533, NEOPIXEL_LED)
   #define PRINTER_EVENT_LEDS
 #endif
-
-/// Beginning of a Differential Extruder block  2/5  ////
-// Differential Extruder currently works only for single-extruder RepRap 32-bit platforms.
-// Otherwise, disable Differential Extruder
-#if ENABLED(DIFFERENTIAL_EXTRUDER)
-    #if !((EXTRUDERS == 1) && (MOTHERBOARD == BOARD_CREALITY_V4))
-      #undef DIFFERENTIAL_EXTRUDER
-    #endif
-#endif
-//// End of a Differential Extruder block  2/5  ////
-  
 
 // @section servos
 

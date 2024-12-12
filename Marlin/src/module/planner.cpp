@@ -3057,21 +3057,18 @@ bool Planner::buffer_line(const xyze_pos_t &cart, const_feedRate_t fr_mm_s
 
   #else // !IS_KINEMATIC
 
-    //// Beginning of a Differential Extruder block  3/5  ////
-    // When a differential extruder is present, planner.cpp adds the X movement to the E movement and send the sum to the E stepper.
-    // This addition is performed only when a print job is running. When a print job is not running, the differential extruder is handled by stepper.cpp
+    // Differential Extruder
+    // The sum of X and E movement is applied to the E stepper.
+    // Outside of a print job, the differential extruder is handled by stepper.cpp.
     #if ENABLED(DIFFERENTIAL_EXTRUDER)
       if (print_job_timer.isRunning()) {
-        // Calculate the steps for X and E
-        long x_steps = lround(machine.x / mm_per_step[X_AXIS]);
-        long e_steps = lround(machine.e / mm_per_step[E_AXIS]);
         // Calculate the differential steps for the extruder
-        e_steps += x_steps;
+        const int32_t e_steps = lround(machine.e * steps_per_mm[E_AXIS])
+                              + lround(machine.x * steps_per_mm[X_AXIS]);
         // Update the machine position with the differential steps
         machine.e = e_steps * mm_per_step[E_AXIS];
       }
     #endif
-    //// End of a Differential Extruder block 3/5  ////    
 
     return buffer_segment(machine, fr_mm_s, extruder, hints);
 

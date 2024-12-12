@@ -1787,6 +1787,10 @@ void Stepper::pulse_phase_isr() {
   // Direct Stepping page?
   const bool is_page = current_block->is_page();
 
+  #if ENABLED(DIFFERENTIAL_EXTRUDER)
+    const bool is_print_job = print_job_timer.isRunning();
+  #endif
+
   do {
     AxisFlags step_needed{0};
 
@@ -1849,65 +1853,33 @@ void Stepper::pulse_phase_isr() {
       DELTA_ERROR = de; \
     }while(0)
 
-    // Start an active pulse if needed
-    #if ENABLED(DIFFERENTIAL_EXTRUDER) 
-      #define PULSE_START(AXIS) do{ \
-        if (step_needed.test(_AXIS(AXIS))) { \
-          count_position[_AXIS(AXIS)] += count_direction[_AXIS(AXIS)]; \
-          _APPLY_STEP(AXIS, _STEP_STATE(AXIS), 0); \
-            /* Beginning of a Differential Extruder block 4/5 */ \
-              if (!print_job_timer.isRunning()) { \
-                if (_AXIS(AXIS) == X_AXIS) { \
-                  /* Set the direction of the E stepper to match the X stepper */ \
-                  if (count_direction[X_AXIS] > 0) { \
-                    FWD_E_DIR(stepper_extruder); \
-                  } else { \
-                    REV_E_DIR(stepper_extruder); \
-                  } \
-                  /* Add the  pulse to the E stepper */ \
-                  E_APPLY_STEP(HIGH, 0); \
-                } \
-              } \
-          /* End of a Differential Extruder block 4/5 */ \
-        } \
-      }while(0)
+    // Differential Extruder moves E along with X
+    #if ENABLED(DIFFERENTIAL_EXTRUDER)
+      #define DIFFERENTIAL_E_PULSE(AXIS, ONSTEP) \
+        if (!is_print_job && _AXIS(AXIS) == X_AXIS) { \
+          E_APPLY_DIR(count_direction[X_AXIS] > 0, false); /* Match E direction to X */ \
+          E_APPLY_STEP(ONSTEP ? _STEP_STATE(E) : !_STEP_STATE(E), false); /* Add the pulse to the E stepper */ \
+        }
     #else
-      #define PULSE_START(AXIS) do{ \
-        if (step_needed.test(_AXIS(AXIS))) { \
-          count_position[_AXIS(AXIS)] += count_direction[_AXIS(AXIS)]; \
-          _APPLY_STEP(AXIS, _STEP_STATE(AXIS), 0); \
-        } \
-      }while(0)
+      #define DIFFERENTIAL_E_PULSE(...) NOOP
     #endif
 
+    // Start an active pulse if needed
+    #define PULSE_START(AXIS) do{ \
+      if (step_needed.test(_AXIS(AXIS))) { \
+        count_position[_AXIS(AXIS)] += count_direction[_AXIS(AXIS)]; \
+        _APPLY_STEP(AXIS, _STEP_STATE(AXIS), false); \
+        DIFFERENTIAL_E_PULSE(AXIS, true); \
+      } \
+    }while(0)
+
     // Stop an active pulse if needed
-    #if ENABLED(DIFFERENTIAL_EXTRUDER) 
-      #define PULSE_STOP(AXIS) do { \
-        if (step_needed.test(_AXIS(AXIS))) { \
-          _APPLY_STEP(AXIS, !_STEP_STATE(AXIS), 0); \
-            /* Beginning of a Differential Extruder block 5/5 */ \
-              if (!print_job_timer.isRunning()) { \
-                if (_AXIS(AXIS) == X_AXIS) { \
-                  /* Set the direction of the E stepper to match the X stepper */ \
-                  if (count_direction[X_AXIS] > 0) { \
-                    FWD_E_DIR(stepper_extruder); \
-                  } else { \
-                    REV_E_DIR(stepper_extruder); \
-                  } \
-                  /* Stop the Differential pulse to the E stepper */ \
-                  E_APPLY_STEP(LOW, 0); \
-                } \
-              } \
-          /* End of a Differential Extruder block 5/5 */ \
-        } \
-      }while(0)
-    #else
-      #define PULSE_STOP(AXIS) do { \
-        if (step_needed.test(_AXIS(AXIS))) { \
-          _APPLY_STEP(AXIS, !_STEP_STATE(AXIS), 0); \
-        } \
-      }while(0)
-    #endif
+    #define PULSE_STOP(AXIS) do { \
+      if (step_needed.test(_AXIS(AXIS))) { \
+        _APPLY_STEP(AXIS, !_STEP_STATE(AXIS), false); \
+        DIFFERENTIAL_E_PULSE(AXIS, false); \
+      } \
+    }while(0)
 
     #if ENABLED(DIRECT_STEPPING)
       // Direct stepping is currently not ready for HAS_I_AXIS
