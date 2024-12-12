@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2024 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -67,8 +67,8 @@
 #define Z_MIN_PIN                           PD7
 #define Z_MAX_PIN                           PD6
 
-#define IO6                           PA8
-#define IN7                           PF8
+#define IO6                                 PA8
+#define IN7                                 PF8
 
 //
 // Z Probe (when not Z_MIN_PIN)
@@ -88,7 +88,7 @@
 
 #define Y_STEP_PIN                          PE3
 #define Y_DIR_PIN                           PF13
-#define Y_ENABLE_PIN                        PF14  
+#define Y_ENABLE_PIN                        PF14
 #ifndef Y_CS_PIN
   #define Y_CS_PIN                          PF12
 #endif
@@ -134,7 +134,6 @@
 #ifndef E4_CS_PIN
   #define E4_CS_PIN                         PG5
 #endif
-
 
 //
 // Temperature Sensors
@@ -210,7 +209,6 @@
 
   #define ONBOARD_SDIO                            // Use SDIO for onboard SD
 
-
 #elif SD_CONNECTION_IS(LCD)
 
   #define SD_SCK_PIN                 EXP2_02_PIN
@@ -225,13 +223,13 @@
 // Trinamic SPI
 //
 #ifndef TMC_SPI_SCK
-  #define TMC_SPI_SCK                PB3
+  #define TMC_SPI_SCK                       PB3
 #endif
 #ifndef TMC_SPI_MISO
-  #define TMC_SPI_MISO               PB4
+  #define TMC_SPI_MISO                      PB4
 #endif
 #ifndef TMC_SPI_MOSI
-  #define TMC_SPI_MOSI               PB5
+  #define TMC_SPI_MOSI                      PB5
 #endif
 
 //
@@ -247,7 +245,6 @@
   #define E2_SERIAL_TX_PIN                  PF1
   #define E3_SERIAL_TX_PIN                  PG2
   #define E4_SERIAL_TX_PIN                  PG5
-  
 #endif
 
 //

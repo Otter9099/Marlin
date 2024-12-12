@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2024 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -77,7 +77,7 @@
 //
 // Z Probe (when not Z_MIN_PIN)
 //
-#define Z_MIN_PROBE_PIN                     PC0 
+#define Z_MIN_PROBE_PIN                     PC0
 
 //
 // Steppers
@@ -158,7 +158,7 @@
 
 
 
-#define FAN0_PIN                          PA0
+#define FAN0_PIN                            PA0
 #define FAN1_PIN                            PA1
 #define FAN2_PIN                            PA2
 #define FAN3_PIN                            PC6
@@ -216,13 +216,13 @@
 // Trinamic SPI
 //
 #ifndef TMC_SPI_SCK
-  #define TMC_SPI_SCK                PB3
+  #define TMC_SPI_SCK                       PB3
 #endif
 #ifndef TMC_SPI_MISO
-  #define TMC_SPI_MISO               PB4
+  #define TMC_SPI_MISO                      PB4
 #endif
 #ifndef TMC_SPI_MOSI
-  #define TMC_SPI_MOSI               PB5
+  #define TMC_SPI_MOSI                      PB5
 #endif
 
 //
