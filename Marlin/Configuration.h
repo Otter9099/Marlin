@@ -555,7 +555,10 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 275
+
+// Updated for Tronxy High-T print head, rated to 320 continuous
+#define HEATER_0_MAXTEMP 335
+
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -604,7 +607,13 @@
 //    #define DEFAULT_Kp  22.20
 //    #define DEFAULT_Ki   1.08
 //    #define DEFAULT_Kd 114.00
-// Values for my Tronxy X5SA-Pro, determined by Autotune
+
+// Values for my Tronxy X5SA-Pro with standard hot end, determined by Autotune
+//    #define DEFAULT_Kp  16.19
+//    #define DEFAULT_Ki   1.02
+//    #define DEFAULT_Kd  64.11
+    
+    // Values for my Tronxy X5SA-Pro with High-T hot end, determined by Autotune
     #define DEFAULT_Kp  16.19
     #define DEFAULT_Ki   1.02
     #define DEFAULT_Kd  64.11
@@ -652,6 +661,11 @@
   //#define DEFAULT_bedKd 305.4
 
   // For my Tronxy X5SA-Pro with glass bed determined by autotune
+  //#define DEFAULT_bedKp 184.93
+  //#define DEFAULT_bedKi  35.03
+  //#define DEFAULT_bedKd 650.97
+
+  // For my Tronxy X5SA-Pro with magnetic spring steel bed determined by autotune
   #define DEFAULT_bedKp 184.93
   #define DEFAULT_bedKi  35.03
   #define DEFAULT_bedKd 650.97
@@ -1087,7 +1101,7 @@
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
  *   (e.g., an inductive probe or a nozzle-based probe-switch.)
  */
-//#define FIX_MOUNTED_PROBE
+#define FIX_MOUNTED_PROBE
 
 /**
  * Use the nozzle as the probe, as with a conductive
@@ -1098,13 +1112,13 @@
 /**
  * Z Servo Probe, such as an endstop switch on a rotating arm.
  */
-#define Z_PROBE_SERVO_NR 0       // Defaults to SERVO 0 connector.
+//#define Z_PROBE_SERVO_NR 0       // Defaults to SERVO 0 connector.
 //#define Z_SERVO_ANGLES { 70, 0 } // Z Servo Deploy and Stow angles
 
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
  */
-#define BLTOUCH
+//#define BLTOUCH
 // NK Add definition for servo pin
 #if ENABLED(BLTOUCH)
   #define SERVO0_PIN PD12
