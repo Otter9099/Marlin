@@ -42,6 +42,10 @@
   #include "HAL/shared/FDCAN.h"
 #endif
 
+#if ENABLED(HAS_ADXL345_ACCELEROMETER)
+  #include "feature/accelerometer/acc_adxl345.h"
+#endif
+
 #if ENABLED(WIFISUPPORT)
   #include "HAL/shared/esp_wifi.h"
 #endif
@@ -1210,20 +1214,6 @@ void setup() {
   #endif
   SERIAL_ECHOLNPGM("start\n");
 
-  #if ENABLED(CAN_MASTER)
-    SERIAL_ECHOLN(
-      F(">>> CAN1 Start: "),
-      CAN1_Start() == HAL_OK ? F("OK") : F("FAILED!")
-    );
-  #endif
-
-  #if ENABLED(CAN_TOOLHEAD)
-    SERIAL_ECHOLN(
-      F(">>> FDCAN2 Start: "),
-       FDCAN2_Start() == HAL_OK ?  F("OK") : F("FAILED!")
-      );
-  #endif
-
   // Set up these pins early to prevent suicide
   #if HAS_KILL
     SETUP_LOG("KILL_PIN");
@@ -1267,6 +1257,23 @@ void setup() {
   TERN_(DYNAMIC_VECTORTABLE, hook_cpu_exceptions()); // If supported, install Marlin exception handlers at runtime
 
   SETUP_RUN(hal.init());
+
+  #if ENABLED(CAN_MASTER)
+    SERIAL_ECHOLN(
+      F(">>> CAN1 Start: "),
+      CAN1_Start() == HAL_OK ? F("OK") : F("FAILED!")
+    );
+  #endif
+
+  #if ENABLED(CAN_TOOLHEAD)
+    SERIAL_ECHOLN(
+      F(">>> FDCAN2 Start: "),
+       FDCAN2_Start() == HAL_OK ?  F("OK") : F("FAILED!")
+      );
+  #endif
+  #if ENABLED(HAS_ADXL345_ACCELEROMETER)
+    adxl345.begin();
+  #endif
 
   // Init and disable SPI thermocouples; this is still needed
   #if TEMP_SENSOR_IS_MAX_TC(0) || (TEMP_SENSOR_IS_MAX_TC(REDUNDANT) && REDUNDANT_TEMP_MATCH(SOURCE, E0))
