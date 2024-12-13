@@ -456,7 +456,7 @@
 //
 
 #elif MB(RAMPS_14_RE_ARM_EFB, RAMPS_14_RE_ARM_EEB, RAMPS_14_RE_ARM_EFF, RAMPS_14_RE_ARM_EEF, RAMPS_14_RE_ARM_SF)
-  #include "lpc1768/pins_RAMPS_RE_ARM.h"            // LPC1768/9                            env:LPC1768 env:LPC1769
+  #include "lpc1768/pins_RAMPS_RE_ARM.h"            // LPC1768                              env:LPC1768
 #elif MB(MKS_SBASE)
   #include "lpc1768/pins_MKS_SBASE.h"               // LPC1768/9                            env:LPC1768 env:LPC1769
 #elif MB(AZSMZ_MINI)
