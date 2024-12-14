@@ -3063,8 +3063,8 @@ bool Planner::buffer_line(const xyze_pos_t &cart, const_feedRate_t fr_mm_s
     #if ENABLED(DIFFERENTIAL_EXTRUDER)
       if (print_job_timer.isRunning()) {
         // Calculate the differential steps for the extruder
-        const int32_t e_steps = lround(machine.e * steps_per_mm[E_AXIS])
-                              + lround(machine.x * steps_per_mm[X_AXIS]);
+        const int32_t e_steps = lround(machine.e * settings.axis_steps_per_mm[E_AXIS])
+                              + lround(machine.x * settings.axis_steps_per_mm[X_AXIS]);
         // Update the machine position with the differential steps
         machine.e = e_steps * mm_per_step[E_AXIS];
       }
