@@ -500,7 +500,7 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
   #endif
 
   #if ENABLED(FREEZE_FEATURE)
-    stepper.frozen = READ(FREEZE_PIN) == FREEZE_STATE;
+    stepper.frozen_pin = READ(FREEZE_PIN) == FREEZE_STATE;
   #endif
 
   #if HAS_HOME
