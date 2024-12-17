@@ -26,24 +26,24 @@
 //
 // Steppers
 //
-#define X_ENABLE_PIN                      PE12
+#define X_ENABLE_PIN                        PE12
 
 #if HAS_TMC_UART
   //
   // TMC2208/TMC2209 stepper drivers
   //
-  #define X_SERIAL_TX_PIN                 PE9
-  #define X_SERIAL_RX_PIN                 PE8
-  #define Y_SERIAL_TX_PIN                 PE14
-  #define Y_SERIAL_RX_PIN                 PE13
-  #define Z_SERIAL_TX_PIN                 PD11
-  #define Z_SERIAL_RX_PIN                 PD12
-  #define E0_SERIAL_TX_PIN                PD3
-  #define E0_SERIAL_RX_PIN                PA15
-  #define E1_SERIAL_TX_PIN                PC4
-  #define E1_SERIAL_RX_PIN                PC5
-  #define E2_SERIAL_TX_PIN                PE1
-  #define E2_SERIAL_RX_PIN                PE0
+  #define X_SERIAL_TX_PIN                   PE9
+  #define X_SERIAL_RX_PIN                   PE8
+  #define Y_SERIAL_TX_PIN                   PE14
+  #define Y_SERIAL_RX_PIN                   PE13
+  #define Z_SERIAL_TX_PIN                   PD11
+  #define Z_SERIAL_RX_PIN                   PD12
+  #define E0_SERIAL_TX_PIN                  PD3
+  #define E0_SERIAL_RX_PIN                  PA15
+  #define E1_SERIAL_TX_PIN                  PC4
+  #define E1_SERIAL_RX_PIN                  PC5
+  #define E2_SERIAL_TX_PIN                  PE1
+  #define E2_SERIAL_RX_PIN                  PE0
 #endif
 
 #include "pins_FYSETC_S6_common.h"
