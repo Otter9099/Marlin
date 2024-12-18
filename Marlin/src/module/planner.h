@@ -247,7 +247,7 @@ typedef struct PlannerBlock {
              acceleration_time_inverse,     // Inverse of acceleration and deceleration periods, expressed as integer. Scale depends on CPU being used
              deceleration_time_inverse;
   #if ENABLED(FREEZE_FEATURE)
-    uint32_t acceleration_rate;             // The acceleration rate used for acceleration calculation
+    uint32_t acceleration_rate;             // The rate used for freeze acceleration calculation
   #endif
   #else
     uint32_t acceleration_rate;             // Acceleration rate in (2^24 steps)/timer_ticks*s

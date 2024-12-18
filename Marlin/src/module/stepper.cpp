@@ -2454,7 +2454,7 @@ hal_timer_t Stepper::block_phase_isr() {
         // acc_step_rate is in steps/second
 
         #if ENABLED(FREEZE_FEATURE)
-          if(frozen_time) check_frozen_time(acc_step_rate);
+          check_frozen_time(acc_step_rate);
         #endif
 
         // step_rate to timer interval and steps per stepper isr
@@ -2528,7 +2528,7 @@ hal_timer_t Stepper::block_phase_isr() {
         #endif
 
         #if ENABLED(FREEZE_FEATURE)
-          if(frozen_time) check_frozen_time(step_rate);
+          check_frozen_time(step_rate);
         #endif
 
         // step_rate to timer interval and steps per stepper isr
@@ -2594,7 +2594,7 @@ hal_timer_t Stepper::block_phase_isr() {
           uint32_t step_rate = current_block->nominal_rate;
 
           #if ENABLED(FREEZE_FEATURE)
-            if(frozen_time) check_frozen_time(step_rate);
+            check_frozen_time(step_rate);
           #endif
 
           // step_rate to timer interval and loops for the nominal speed
@@ -2877,7 +2877,7 @@ hal_timer_t Stepper::block_phase_isr() {
       uint32_t step_rate = current_block->initial_rate;
 
       #if ENABLED(FREEZE_FEATURE)
-        if(frozen_time) check_frozen_time(step_rate);
+        check_frozen_time(step_rate);
       #endif
 
       // Calculate the initial timer interval
@@ -4567,6 +4567,17 @@ void Stepper::report_positions() {
 #if ENABLED(FREEZE_FEATURE)
 
 void Stepper::check_frozen_time(uint32_t &step_rate) {
+  //If frozen_time is 0 there is no need to modify the current step_rate
+  if(!frozen_time) return;
+
+  #if ENABLED(S_CURVE_ACCELERATION)
+    //If the machine is configured to use S_CURVE_ACCELERATION standard ramp acceleration 
+    // rate will not have been calculated at this point
+    if(!current_block->acceleration_rate) {
+      current_block->acceleration_rate = (uint32_t)(current_block->acceleration_steps_per_s2 * (float(1UL << 24) / (STEPPER_TIMER_RATE)));
+    }
+  #endif
+
   uint32_t freeze_rate = STEP_MULTIPLY(frozen_time, current_block->acceleration_rate);
   if(freeze_rate >= step_rate) step_rate = 1;
   else step_rate -= freeze_rate;
