@@ -318,7 +318,7 @@
 #define BOARD_ADSK                    3101  // Arduino DUE Shield Kit (ADSK)
 
 //
-// STM32 ARM Cortex-M0+
+// STM32 ARM Cortex-M0/+
 //
 
 #define BOARD_BTT_EBB42_V1_1          4000  // BigTreeTech EBB42 V1.1 (STM32G0B1CB)
@@ -329,6 +329,9 @@
 #define BOARD_BTT_MANTA_M8P_V1_0      4005  // BigTreeTech Manta M8P V1.0 (STM32G0B1VE)
 #define BOARD_BTT_MANTA_M8P_V1_1      4006  // BigTreeTech Manta M8P V1.1 (STM32G0B1VE)
 #define BOARD_BTT_SKRAT_V1_0          4007  // BigTreeTech SKRat V1.0 (STM32G0B1VE)
+#define BOARD_FLY_D5                  4008  // FLY_D5 (STM32F072RB)
+#define BOARD_FLY_DP5                 4009  // FLY_DP5 (STM32F072RB)
+#define BOARD_FLY_D7                  4010  // FLY_D7 (STM32F072RB)
 
 //
 // STM32 ARM Cortex-M3
@@ -475,6 +478,7 @@
 #define BOARD_FLY_RRF_E3_V1           5253  // Fly RRF E3 V1.0 (STM32F407VG)
 #define BOARD_FLY_SUPER8              5254  // Fly SUPER8 (STM32F407ZGT6)
 #define BOARD_FLY_D8                  5255  // FLY D8 (STM32F407VG)
+#define BOARD_FLY_CDY_V3              5256  // FLY CDY V3 (STM32F407VGT6)
 
 //
 // Other ARM Cortex-M4
@@ -498,6 +502,8 @@
 #define BOARD_BTT_KRAKEN_V1_0         6010  // BigTreeTech Kraken v1.0 (STM32H723ZG)
 #define BOARD_TEENSY41                6011  // Teensy 4.1
 #define BOARD_T41U5XBB                6012  // T41U5XBB Teensy 4.1 breakout board
+#define BOARD_FLY_D8_PRO              6013  // FLY_D8_PRO (STM32H723VG)
+#define BOARD_FLY_SUPER8_PRO          6014  // FLY SUPER8 PRO (STM32H723ZG)
 
 //
 // Espressif ESP32 WiFi
