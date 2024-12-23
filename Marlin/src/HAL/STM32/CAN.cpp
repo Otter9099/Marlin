@@ -590,7 +590,7 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle) { // Called by HAL_CAN_Init
       Error_Handler();
 
     // CAN1 clock enable
-    if (__HAL_RCC_CAN1_IS_CLK_DISABLED()); // Enable CAN1 clock
+    if (__HAL_RCC_CAN1_IS_CLK_DISABLED())
       __HAL_RCC_CAN1_CLK_ENABLE();         // Enable CAN1 clock
 
     if (__HAL_RCC_GPIOB_IS_CLK_DISABLED()) // Should be enabled by Marlin already
