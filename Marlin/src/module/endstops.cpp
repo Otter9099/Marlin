@@ -84,6 +84,12 @@ Endstops::endstop_mask_t Endstops::live_state = 0;
   #else
     #define READ_ENDSTOP(P) READ(P)
   #endif
+#elif ENABLED(CAN_MASTER) // Read virtual CAN IO Probe status if needed
+  #if HAS_BED_PROBE
+    #define READ_ENDSTOP(P) ((P == Z_MIN_PIN) ? PROBE_READ() : READ(P))
+  #else
+    #define READ_ENDSTOP(P) READ(P)
+  #endif
 #else
   #define READ_ENDSTOP(P) READ(P)
 #endif
@@ -671,6 +677,12 @@ void Endstops::update() {
     // When closing the gap check the enabled probe
     if (probe_switch_activated())
       UPDATE_LIVE_STATE(Z, TERN(USE_Z_MIN_PROBE, MIN_PROBE, MIN));
+
+    #if ENABLED(CAN_TOOLHEAD)
+      HAL_StatusTypeDef CAN_Send_Message(bool TempUpdate); // Function Prototype
+      CAN_Send_Message(false); // Send Virtual IO update without temperature report
+    #endif // CAN_TOOLHEAD
+
   #endif
 
   #if USE_Z_MAX
